@@ -51,7 +51,6 @@ public class Main {
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (vetor.get(j) > vetor.get(j + 1)) {
-                    // Troca (Swap)
                     int temp = vetor.get(j);
                     vetor.set(j, vetor.get(j + 1));
                     vetor.set(j + 1, temp);
@@ -64,8 +63,12 @@ public class Main {
     }
 
     private static void quickSort(ArrayList<Integer> vetor) {
-        quickSort(vetor, 0, vetor.size() - 1);
+        BenchMark bench = new BenchMark();
+        bench.start();
+        quickSort(vetor, 0, vetor.size() - 1); 
+        bench.stop();
         show(vetor);
+        time(bench);
     }
 
     // Método recursivo interno - recebe início e fim
@@ -98,6 +101,8 @@ public class Main {
     }
 
     private static void shellSort(ArrayList<Integer> vetor) {
+        BenchMark bench = new BenchMark();
+        bench.start();
         int n = vetor.size();
 
         // Começa com um gap grande e divide por 2 a cada loop
@@ -114,7 +119,9 @@ public class Main {
                 vetor.set(j, temp);
             }
         }
+        bench.stop();
         show(vetor);
+        time(bench);
     }
 
     private static ArrayList<Integer> charge(ArrayList<Integer> array, Scanner scanner) {
@@ -141,7 +148,7 @@ public class Main {
         }
         return array;
     }
-    
+
     private static void show(ArrayList<Integer> lista) {
         System.out.println("==========================================");
         for (int i = 0; i < lista.size(); i++) {
@@ -152,7 +159,7 @@ public class Main {
 
     private static void time(BenchMark bench) {
         System.out.println("==========================================");
-        System.out.println("Tempo de execucao: " + bench.getTime());
+        System.out.println("Tempo de execucao: " + bench.getTime() + " Ms");
     }
 
     private static void menu() {
