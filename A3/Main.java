@@ -161,7 +161,7 @@ public class Main {
         array.clear();
         System.out.println("Informe o nome do arquivo a ser carregado:");
         String name = scanner.next();
-        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("A2/" + name + ".txt"))) {
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("A3/" + name + ".txt"))) {
             String linha;
             int indice = 0;
             while ((linha = br.readLine()) != null) {

@@ -1,0 +1,25 @@
+JoanaTimoteo
+AmaroCavalcante
+AnaReinaldo
+FranciscoPauloDeOliveira
+JoaoGama
+HiginoRoberto
+PorfiroGabrielDosAnjos
+AntonioMartins
+JoseVicente
+PedroFernandes
+HerculanoDeMelo
+<->
+JoanaTimoteo, AmaroCavalcante, 2.9
+JoanaTimoteo, AnaReinaldo, 5.7
+AmaroCavalcante, AnaReinaldo, 5.7
+AnaReinaldo, JoaoGama, 13.6
+JoaoGama, FranciscoPauloDeOliveira, 14.7
+JoaoGama, PedroFernandes, 11.4
+JoaoGama, PorfiroGabrielDosAnjos, 7.6
+FranciscoPauloDeOliveira, PedroFernandes, 3.6
+PedroFernandes, HerculanoDeMelo, 14.5
+PorfiroGabrielDosAnjos, HiginoRoberto, 1.5
+PorfiroGabrielDosAnjos, AntonioMartins, 7.9
+HiginoRoberto, AntonioMartins, 10.4
+AntonioMartins, JoseVicente, 12.9
