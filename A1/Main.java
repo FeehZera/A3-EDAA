@@ -24,7 +24,7 @@ public class Main {
                     show(list);
                     break;
                 case 2: // ta certo
-                    try (BufferedReader br = new BufferedReader(new FileReader("dados.txt"))) {
+                    try (BufferedReader br = new BufferedReader(new FileReader("A1/dados.txt"))) {
                         String linha;
                         String separador = null;
                         boolean passouSeparador = false;
@@ -144,6 +144,7 @@ public class Main {
                     runnig = false;
                     break;
                 default:
+                    System.out.println("Opcao invalida");
                     break;
             }
         }
