@@ -45,10 +45,10 @@ public class Main {
     }
 
     private static void bubbleSort(ArrayList<Integer> vetor) {
+        BenchMark bench = new BenchMark();
+        bench.start();
         int n = vetor.size();
-        // Loop externo controla as passadas
         for (int i = 0; i < n - 1; i++) {
-            // Loop interno compara adjacentes
             for (int j = 0; j < n - i - 1; j++) {
                 if (vetor.get(j) > vetor.get(j + 1)) {
                     // Troca (Swap)
@@ -58,7 +58,9 @@ public class Main {
                 }
             }
         }
+        bench.stop();
         show(vetor);
+        time(bench);
     }
 
     private static void quickSort(ArrayList<Integer> vetor) {
@@ -122,13 +124,9 @@ public class Main {
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("A2/" + name + ".txt"))) {
             String linha;
             int indice = 0;
-
-            // Loop para percorrer cada linha do arquivo
             while ((linha = br.readLine()) != null) {
-                // Converte a linha para inteiro e adiciona ao ArrayList
-                if (!linha.trim().isEmpty()) { // Ignora linhas vazias
+                if (!linha.trim().isEmpty()) {
                     int valor = Integer.parseInt(linha.trim());
-                    // Se o índice já existe, usa .set(), senão adiciona com .add()
                     if (indice < array.size()) {
                         array.set(indice, valor);
                     } else {
@@ -137,9 +135,7 @@ public class Main {
                     indice++;
                 }
             }
-
             System.out.println("Arquivo carregado com sucesso! Total de valores: " + array.size());
-
         } catch (Exception e) {
             System.out.println("Erro: " + e);
         }
@@ -152,6 +148,11 @@ public class Main {
             System.out.print(lista.get(i) + " ");
         }
         System.out.println();
+    }
+
+    private static void time(BenchMark bench) {
+        System.out.println("==========================================");
+        System.out.println("Tempo de execucao: " + bench.getTime());
     }
 
     private static void menu() {
