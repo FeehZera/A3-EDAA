@@ -1,4 +1,4 @@
-package A2;
+package A3;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -46,10 +46,15 @@ public class Main {
 
     private static void bubbleSort(ArrayList<Integer> vetor) {
         BenchMark bench = new BenchMark();
+        MemoryUsage mem = new MemoryUsage();
+        int comparisons = 0;
+        mem.start();
         bench.start();
+
         int n = vetor.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
+                comparisons++;
                 if (vetor.get(j) > vetor.get(j + 1)) {
                     int temp = vetor.get(j);
                     vetor.set(j, vetor.get(j + 1));
@@ -57,28 +62,43 @@ public class Main {
                 }
             }
         }
+
         bench.stop();
+        mem.stop();
         show(vetor);
         time(bench);
+        memory(mem);
+        showComparisons(comparisons);
     }
 
     private static void quickSort(ArrayList<Integer> vetor) {
         BenchMark bench = new BenchMark();
+        MemoryUsage mem = new MemoryUsage();
+
+        mem.start();
         bench.start();
-        quickSort(vetor, 0, vetor.size() - 1); 
+
+        int comparisons = quickSort(vetor, 0, vetor.size() - 1); // chama o método recursivo já existente
+
         bench.stop();
+        mem.stop();
+
         show(vetor);
         time(bench);
+        memory(mem);
+        showComparisons(comparisons);
     }
 
-    // Método recursivo interno - recebe início e fim
-    private static void quickSort(ArrayList<Integer> vetor, int inicio, int fim) {
+    // Método recursivo interno - recebe início e fim e retorna o número de comparações
+    private static int quickSort(ArrayList<Integer> vetor, int inicio, int fim) {
+        int comparisons = 0;
         if (inicio < fim) {
             // Lógica de particionamento integrada
             int pivo = vetor.get(fim); // Escolhe o último como pivô
             int i = (inicio - 1);
 
             for (int j = inicio; j < fim; j++) {
+                comparisons++; // Conta a comparação
                 if (vetor.get(j) <= pivo) {
                     i++;
                     // Troca vetor[i] com vetor[j]
@@ -94,14 +114,18 @@ public class Main {
 
             int indicePivo = i + 1;
 
-            // Chamada Recursiva (chama a si mesmo)
-            quickSort(vetor, inicio, indicePivo - 1); // Lado esquerdo
-            quickSort(vetor, indicePivo + 1, fim); // Lado direito
+            // Chamada Recursiva (chama a si mesmo) e soma as comparações
+            comparisons += quickSort(vetor, inicio, indicePivo - 1); // Lado esquerdo
+            comparisons += quickSort(vetor, indicePivo + 1, fim); // Lado direito
         }
+        return comparisons;
     }
 
     private static void shellSort(ArrayList<Integer> vetor) {
         BenchMark bench = new BenchMark();
+        MemoryUsage mem = new MemoryUsage();
+        int comparisons = 0;
+        mem.start();
         bench.start();
         int n = vetor.size();
 
@@ -113,15 +137,24 @@ public class Main {
                 int temp = vetor.get(i);
                 int j;
 
-                for (j = i; j >= gap && vetor.get(j - gap) > temp; j -= gap) {
-                    vetor.set(j, vetor.get(j - gap));
+                for (j = i; j >= gap; j -= gap) {
+                    comparisons++; // Conta a comparação
+                    if (vetor.get(j - gap) > temp) {
+                        vetor.set(j, vetor.get(j - gap));
+                    } else {
+                        break; // Sai do loop se não precisa trocar
+                    }
                 }
                 vetor.set(j, temp);
             }
         }
+
         bench.stop();
+        mem.stop();
         show(vetor);
         time(bench);
+        memory(mem);
+        showComparisons(comparisons);
     }
 
     private static ArrayList<Integer> charge(ArrayList<Integer> array, Scanner scanner) {
@@ -159,7 +192,16 @@ public class Main {
 
     private static void time(BenchMark bench) {
         System.out.println("==========================================");
-        System.out.println("Tempo de execucao: " + bench.getTime() + " Ms");
+        System.out.println("Tempo de execucao: " + bench.getTime());
+    }
+
+    private static void memory(MemoryUsage mem) {
+        System.out.println(
+                "Memória adicional utilizada: " + mem.getUsedBytes() + " bytes (" + mem.getUsedKilobytes() + " KB)");
+    }
+
+    private static void showComparisons(int comparisons) {
+        System.out.println("Quantidade de comparacoes feitas pelo ordenador: " + comparisons);
     }
 
     private static void menu() {
