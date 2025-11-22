@@ -22,16 +22,19 @@ public class Main {
                     show(array);
                     break;
                 case 2:
-                    array = charge(array, scanner);
+                    array = charge(array, scanner, null);
                     break;
                 case 3:
-                    bubbleSort(array);
+                    bubbleSort(array, true);
                     break;
                 case 4:
-                    quickSort(array);
+                    quickSort(array, true);
                     break;
                 case 5:
-                    shellSort(array);
+                    shellSort(array, true);
+                    break;
+                case 6:
+                    benchMarkTriple(array, scanner);
                     break;
                 case 0:
                     running = false;
@@ -44,7 +47,7 @@ public class Main {
 
     }
 
-    private static void bubbleSort(ArrayList<Integer> vetor) {
+    private static void bubbleSort(ArrayList<Integer> vetor, boolean show) {
         BenchMark bench = new BenchMark();
         MemoryUsage mem = new MemoryUsage();
         int comparisons = 0;
@@ -65,13 +68,18 @@ public class Main {
 
         bench.stop();
         mem.stop();
-        show(vetor);
+        if (show) {
+            show(vetor);
+        } else {
+            System.out.println("==========================================");
+            System.out.println("Bubble Sort");
+        }
         time(bench);
         memory(mem);
         showComparisons(comparisons);
     }
 
-    private static void quickSort(ArrayList<Integer> vetor) {
+    private static void quickSort(ArrayList<Integer> vetor, boolean show) {
         BenchMark bench = new BenchMark();
         MemoryUsage mem = new MemoryUsage();
 
@@ -82,14 +90,19 @@ public class Main {
 
         bench.stop();
         mem.stop();
-
-        show(vetor);
+        if (show) {
+            show(vetor);
+        } else {
+            System.out.println("==========================================");
+            System.out.println("Quick Sort");
+        }
         time(bench);
         memory(mem);
         showComparisons(comparisons);
     }
 
-    // Método recursivo interno - recebe início e fim e retorna o número de comparações
+    // Método recursivo interno - recebe início e fim e retorna o número de
+    // comparações
     private static int quickSort(ArrayList<Integer> vetor, int inicio, int fim) {
         int comparisons = 0;
         if (inicio < fim) {
@@ -121,7 +134,7 @@ public class Main {
         return comparisons;
     }
 
-    private static void shellSort(ArrayList<Integer> vetor) {
+    private static void shellSort(ArrayList<Integer> vetor, boolean show) {
         BenchMark bench = new BenchMark();
         MemoryUsage mem = new MemoryUsage();
         int comparisons = 0;
@@ -151,16 +164,25 @@ public class Main {
 
         bench.stop();
         mem.stop();
-        show(vetor);
+        if (show) {
+            show(vetor);
+        } else {
+            System.out.println("==========================================");
+            System.out.println("Shell Sort");
+        }
         time(bench);
         memory(mem);
         showComparisons(comparisons);
     }
 
-    private static ArrayList<Integer> charge(ArrayList<Integer> array, Scanner scanner) {
+    private static ArrayList<Integer> charge(ArrayList<Integer> array, Scanner scanner, String name) {
         array.clear();
-        System.out.println("Informe o nome do arquivo a ser carregado:");
-        String name = scanner.next();
+        boolean condition = false;
+        if (name == null) {
+            System.out.println("Informe o nome do arquivo a ser carregado:");
+            name = scanner.next();
+            condition = true;
+        }
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("A3/" + name + ".txt"))) {
             String linha;
             int indice = 0;
@@ -175,11 +197,27 @@ public class Main {
                     indice++;
                 }
             }
-            System.out.println("Arquivo carregado com sucesso! Total de valores: " + array.size());
+            if (condition) {
+                System.out.println("Arquivo carregado com sucesso! Total de valores: " + array.size());
+            }
         } catch (Exception e) {
             System.out.println("Erro: " + e);
         }
         return array;
+    }
+
+    private static void benchMarkTriple(ArrayList<Integer> array, Scanner scanner) {
+        System.out.println("Informe o nome do arquivo a ser carregado:");
+        String name = scanner.next();
+        array.clear();
+        array = charge(array, scanner, name);
+        bubbleSort(array, false);
+        array.clear();
+        array = charge(array, scanner, name);
+        quickSort(array, false);
+        array.clear();
+        array = charge(array, scanner, name);
+        shellSort(array, false);
     }
 
     private static void show(ArrayList<Integer> lista) {
@@ -211,6 +249,7 @@ public class Main {
         System.out.println("3. Ordenar por Bubble Sort");
         System.out.println("4. Ordenar por Quick Sort");
         System.out.println("5. Ordenar por Shell Sort");
+        System.out.println("6. BenchMark dos 3 algoritimos");
         System.out.println("0. Sair");
         System.out.println("==========================================");
     }
