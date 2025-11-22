@@ -44,7 +44,6 @@ public class Main {
                     break;
             }
         }
-
     }
 
     private static void bubbleSort(ArrayList<Integer> vetor, boolean show) {
